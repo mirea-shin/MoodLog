@@ -1,7 +1,8 @@
 interface ButtonProps {
   type: 'submit';
+  text: string;
 }
 
-export default function Button({ type }: ButtonProps) {
-  return <button type={type}>Button</button>;
+export default function Button({ type, text }: ButtonProps) {
+  return <button type={type}>{text}</button>;
 }
