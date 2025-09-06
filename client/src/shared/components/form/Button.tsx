@@ -1,8 +1,20 @@
 interface ButtonProps {
-  type: 'submit';
+  type: 'submit' | 'button';
   text: string;
+  onClick?: () => void;
 }
 
-export default function Button({ type, text }: ButtonProps) {
-  return <button type={type}>{text}</button>;
+export default function Button({ type, text, onClick }: ButtonProps) {
+  return (
+    <button
+      type={type}
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+      }}
+    >
+      {text}
+    </button>
+  );
 }

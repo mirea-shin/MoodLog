@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Form from '../../shared/components/form/Form';
 import Button from '../../shared/components/form/Button';
@@ -7,6 +8,7 @@ import Input from '../../shared/components/form/Input';
 import { useAuthStore } from '../index';
 
 export default function LoginForm() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const login = useAuthStore((state) => state.login);
@@ -22,6 +24,7 @@ export default function LoginForm() {
     const isSuccess = login(username, password); // Boolean 반환
     if (isSuccess) {
       console.log('로그인 성공! 다음 동작 실행');
+      navigate('/moodLog', { replace: true });
       // 예: 페이지 이동, 모달 닫기 등
     } else {
       console.log('아이디/비밀번호를 확인해주세요.');
