@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Form from '../../shared/components/form/Form';
-import Button from '../../shared/components/form/Button';
-import Input from '../../shared/components/form/Input';
+import Form from '../../../shared/components/form/Form';
+import Button from '../../../shared/components/form/Button';
+import Input from '../../../shared/components/form/Input';
 
 import { useAuthStore } from '../index';
 

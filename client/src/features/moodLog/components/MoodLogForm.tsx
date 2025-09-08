@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Button from '../../shared/components/form/Button';
-import Form from '../../shared/components/form/Form';
-import Input from '../../shared/components/form/Input';
+import Button from '../../../shared/components/form/Button';
+import Form from '../../../shared/components/form/Form';
+import Input from '../../../shared/components/form/Input';
 
 export default function MoodLogForm() {
   const [moodMsg, setMoodMsg] = useState('');
