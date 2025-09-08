@@ -56,11 +56,11 @@ export default function LoginForm() {
         <Button type="submit" text="LOGIN" />
       </div>
       <div className="flex justify-center items-center  gap-2">
-        <button type="button" className="text-gray-600 hover:text-blue-500">
+        <button type="button" className="text-gray-500 hover:text-blue-500">
           Continue as Test User
         </button>
         <p>|</p>
-        <button type="button" className="text-gray-600 hover:text-blue-500">
+        <button type="button" className="text-gray-500 hover:text-blue-500">
           Sign up
         </button>
       </div>

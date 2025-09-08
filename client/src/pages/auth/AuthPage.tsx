@@ -26,7 +26,7 @@ export default function AuthPage() {
           <h1 className="px-2 ">{currentEmotion}</h1>
           <h1>{TITLE}</h1>
         </div>
-        <h4 className="text-gray-700">Your daily mood</h4>
+        <h4 className="text-gray-500">Your daily mood</h4>
       </div>
       <LoginForm />
     </Card>
