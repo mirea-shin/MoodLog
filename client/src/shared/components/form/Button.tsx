@@ -13,6 +13,7 @@ export default function Button({ type, text, onClick }: ButtonProps) {
           onClick();
         }
       }}
+      className="w-full bg-blue-400 text-white py-2 rounded-lg"
     >
       {text}
     </button>

@@ -10,6 +10,7 @@ export default function Form({ children, onSubmit }: FormProps) {
         e.preventDefault();
         onSubmit();
       }}
+      className="w-full"
     >
       {children}
     </form>

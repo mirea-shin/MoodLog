@@ -1,5 +1,4 @@
-import MoodCalendar from './MoodCalendar';
-import MoodSidebar from './MoodSidebar';
+import { MoodCalendar, MoodSidebar } from '../index';
 
 export default function MoodDashboard() {
   return (

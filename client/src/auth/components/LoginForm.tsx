@@ -34,21 +34,36 @@ export default function LoginForm() {
 
   return (
     <Form onSubmit={handleLogin}>
-      <Input
-        id="username"
-        type="text"
-        label="ID"
-        value={username}
-        onChange={handleOnChange}
-      />
-      <Input
-        id="password"
-        type="password"
-        label="Password"
-        value={password}
-        onChange={handleOnChange}
-      />
-      <Button type="submit" text="LOGIN" />
+      <div className="mb-2">
+        <Input
+          id="username"
+          type="text"
+          label="ID"
+          value={username}
+          onChange={handleOnChange}
+        />
+      </div>
+      <div>
+        <Input
+          id="password"
+          type="password"
+          label="Password"
+          value={password}
+          onChange={handleOnChange}
+        />
+      </div>
+      <div className="flex justify-center items-center my-5">
+        <Button type="submit" text="LOGIN" />
+      </div>
+      <div className="flex justify-center items-center  gap-2">
+        <button type="button" className="text-gray-600 hover:text-blue-500">
+          Continue as Test User
+        </button>
+        <p>|</p>
+        <button type="button" className="text-gray-600 hover:text-blue-500">
+          Sign up
+        </button>
+      </div>
     </Form>
   );
 }
