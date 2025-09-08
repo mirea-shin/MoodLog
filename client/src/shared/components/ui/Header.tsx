@@ -12,7 +12,7 @@ export default function Header() {
         <span className="text-2xl">
           <BsFillChatHeartFill />
         </span>
-        <h6 className="text-2xl">{TITLE}</h6>
+        <h6 className="text-2xl font-semibold">{TITLE}</h6>
       </div>
       {isLoggedIn && (
         <div className="text-xl">

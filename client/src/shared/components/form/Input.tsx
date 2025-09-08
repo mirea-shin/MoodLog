@@ -24,7 +24,7 @@ export default function Input({
   return (
     <div className="flex flex-col gap-2 w-full">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-gray-700">
+        <label htmlFor={id} className="text-sm font-medium text-gray-500">
           {label}
         </label>
       )}
@@ -38,6 +38,7 @@ export default function Input({
         />
         {type === 'password' && (
           <button
+            type="button"
             onClick={() => setShowPwd((prev) => !prev)}
             className="absolute right-3 h-full"
           >
