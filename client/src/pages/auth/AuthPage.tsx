@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { LoginForm } from '../../auth';
+import { LoginForm } from '../../features/auth/index';
 import Card from '../../shared/components/ui/Card';
 
 import { EMOTIONS } from '../../constants/emotion';
+import { TITLE } from '../../constants/strings';
 
 export default function AuthPage() {
   const [index, setIndex] = useState(0);
@@ -23,7 +24,7 @@ export default function AuthPage() {
       <div className=" flex flex-col justify-center items-center mb-8">
         <div className="flex">
           <h1 className="px-2 ">{currentEmotion}</h1>
-          <h1>MoodLog</h1>
+          <h1>{TITLE}</h1>
         </div>
         <h4 className="text-gray-700">Your daily mood</h4>
       </div>

@@ -1,6 +1,6 @@
 import { useMoodLogStore } from '../index';
 
-import { getDateParts } from '../../utils/date';
+import { getDateParts } from '../../../utils/date';
 import MoodLogForm from './MoodLogForm';
 
 export default function MoodSidebar() {

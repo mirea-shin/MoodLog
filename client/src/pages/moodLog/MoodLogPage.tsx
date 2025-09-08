@@ -1,4 +1,4 @@
-import MoodDashboard from '../../moodLog/components/MoodDashboard';
+import { MoodDashboard } from '../../features/moodLog/index';
 
 export default function MoodLogPage() {
   return <MoodDashboard />;
