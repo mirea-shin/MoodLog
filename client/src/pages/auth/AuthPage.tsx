@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { LoginForm } from '../../features/auth/index';
+import { LoginForm, SignUpForm, useAuthStore } from '../../features/auth/index';
 import Card from '../../shared/components/ui/Card';
 
 import { EMOTIONS } from '../../constants/emotion';
@@ -8,6 +8,8 @@ import { TITLE } from '../../constants/strings';
 
 export default function AuthPage() {
   const [index, setIndex] = useState(0);
+
+  const { mode } = useAuthStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,7 +30,8 @@ export default function AuthPage() {
         </div>
         <h4 className="text-gray-500">Your daily mood</h4>
       </div>
-      <LoginForm />
+      {mode === 'login' && <LoginForm />}
+      {mode === 'signUp' && <SignUpForm />}
     </Card>
   );
 }
