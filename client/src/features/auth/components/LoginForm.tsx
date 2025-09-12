@@ -11,7 +11,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const login = useAuthStore((state) => state.login);
+  const { login, changeAuthMode } = useAuthStore();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -60,7 +60,13 @@ export default function LoginForm() {
           Continue as Test User
         </button>
         <p>|</p>
-        <button type="button" className="text-gray-500 hover:text-blue-500">
+        <button
+          type="button"
+          className="text-gray-500 hover:text-blue-500"
+          onClick={() => {
+            changeAuthMode('signUp');
+          }}
+        >
           Sign up
         </button>
       </div>
