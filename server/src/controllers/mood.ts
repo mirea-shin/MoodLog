@@ -1,51 +1,51 @@
-import express from 'express';
+import { Request, Response } from 'express';
 
-const mood = express.Router();
+import {
+  getMonthlyData,
+  findDailyData,
+  updateMonthlyData,
+  addMoodData,
+  filterMonthlyData,
+} from '../data/mood';
 
-// 월별 조회
-mood.get('/moods{:year, :date}', (req, res) => {
+export const getMonthlyMoods = (req: Request, res: Response) => {
   res.status(200).json({
-    moods: [
-      { day: 1, mood: '😀' },
-      { day: 2, mood: null },
-      { day: 3, mood: '😢' },
-    ],
+    monthly: getMonthlyData(),
   });
-});
+};
 
-// 일별 조회
-mood.get('/:date', (req, res) => {
-  res.status(200).json({
-    date: '2025-09-03',
-    mood: {
-      value: '😀',
-      msg: 'awesome',
-      comments: [
-        {
-          user: {
-            id: 123,
-            name: 'Mirea',
-            avatar: 'https://example.com/avatar.jpg',
-          },
-          comment: 'wow!',
-        },
-      ],
-    },
-  });
-});
+export const getDailyMood = async (req: Request, res: Response) => {
+  const { date } = req.params;
 
-mood.post('/:date', (req, res) => {
-  console.log(req.body);
-  res.send(201).json({});
-});
+  const founded = await findDailyData(date);
 
-mood.put('/:date', (req, res) => {
-  console.log(req.body);
-  res.send(201).json({});
-});
+  if (founded) {
+    res.status(200).json({ ...founded });
+  } else {
+    res.sendStatus(404);
+  }
+};
 
-mood.delete('/:date', (req, res) => {
-  res.send(204);
-});
+export const addMood = async (req: Request, res: Response) => {
+  const { date } = req.params;
 
-export default mood;
+  await addMoodData(date, req.body);
+
+  res.status(201).json({ monthly: getMonthlyData() });
+};
+
+export const editMood = async (req: Request, res: Response) => {
+  const { date } = req.params;
+
+  await updateMonthlyData(date, req.body);
+
+  res.status(201).json({ monthly: getMonthlyData() });
+};
+
+export const deleteMood = async (req: Request, res: Response) => {
+  const { date } = req.params;
+
+  await filterMonthlyData(date);
+
+  res.status(204).json({ monthly: getMonthlyData() });
+};
