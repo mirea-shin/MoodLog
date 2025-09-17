@@ -1,51 +1,68 @@
 import { Request, Response } from 'express';
-
 import {
-  getMonthlyData,
-  findDailyData,
-  updateMonthlyData,
+  getMonthData,
+  getDayData,
   addMoodData,
-  filterMonthlyData,
+  editMoodData,
+  deleteMoodData,
 } from '../data/mood';
 
-export const getMonthlyMoods = (req: Request, res: Response) => {
-  res.status(200).json({
-    monthly: getMonthlyData(),
-  });
+export const getMonthlyMoods = async (req: Request, res: Response) => {
+  const moods = await getMonthData(req.query);
+
+  return moods
+    ? res.status(200).json(moods)
+    : res.status(400).json({ message: 'Invaild query' });
 };
 
 export const getDailyMood = async (req: Request, res: Response) => {
   const { date } = req.params;
+  if (!date) return res.status(400).json({ message: 'Invaild param' });
 
-  const founded = await findDailyData(date);
+  const mood = await getDayData(date);
 
-  if (founded) {
-    res.status(200).json({ ...founded });
-  } else {
-    res.sendStatus(404);
-  }
+  return mood
+    ? res.status(200).json(mood)
+    : res.send(404).json({ message: 'no Data' });
 };
 
-export const addMood = async (req: Request, res: Response) => {
+export const addNewMood = async (req: Request, res: Response) => {
   const { date } = req.params;
+  if (!date) return res.status(400).json({ message: 'Invaild param' });
 
-  await addMoodData(date, req.body);
+  const { label, message } = req.body;
+  if (!label || !message)
+    res.status(400).json({ message: 'req body is something wrong' });
 
-  res.status(201).json({ monthly: getMonthlyData() });
+  const newMood = await addMoodData(req.body, date);
+
+  return newMood
+    ? res.sendStatus(201)
+    : res.status(400).json({ message: 'something went wrong' });
 };
 
-export const editMood = async (req: Request, res: Response) => {
+export const updateMood = async (req: Request, res: Response) => {
   const { date } = req.params;
+  if (!date) return res.status(400).json({ message: 'Invaild param' });
 
-  await updateMonthlyData(date, req.body);
+  const { label, message } = req.body;
+  if (!label || !message)
+    res.status(400).json({ message: 'req body is something wrong' });
 
-  res.status(201).json({ monthly: getMonthlyData() });
+  const editedMood = await editMoodData(req.body, date);
+
+  return editedMood
+    ? res.sendStatus(201)
+    : res.status(400).json({ message: 'something went wrong' });
 };
 
 export const deleteMood = async (req: Request, res: Response) => {
   const { date } = req.params;
+  if (!date) return res.status(400).json({ message: 'Invaild param' });
 
-  await filterMonthlyData(date);
+  const deletedMood = await deleteMoodData(date);
 
-  res.status(204).json({ monthly: getMonthlyData() });
+  deletedMood
+    ? res.sendStatus(204)
+    : res.status(400).json({ message: 'something went wrong' });
 };

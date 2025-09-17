@@ -5,8 +5,8 @@ const mood = express.Router();
 import {
   getMonthlyMoods,
   getDailyMood,
-  addMood,
-  editMood,
+  addNewMood,
+  updateMood,
   deleteMood,
 } from '../controllers/mood';
 
@@ -17,10 +17,10 @@ mood.get('/{:year, :month}', getMonthlyMoods);
 mood.get('/:date', getDailyMood);
 
 // 무드 등록
-mood.post('/:date', addMood);
+mood.post('/:date', addNewMood);
 
 // 수정
-mood.put('/:date', editMood);
+mood.put('/:date', updateMood);
 
 // 삭제
 mood.delete('/:date', deleteMood);
