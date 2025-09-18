@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 
 import mood from './router/mood';
 
@@ -10,6 +11,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(helmet());
 
 app.use('/mood', mood);
 app.listen(PORT, () => console.log(`Server running: http://localhost:${PORT}`));
