@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Form from '../../../shared/components/form/Form';
@@ -11,30 +11,39 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login, changeAuthMode } = useAuthStore();
+
+  const { login, changeAuthMode, loading, error, setErrMsg, isLoggedIn } =
+    useAuthStore();
+
+  useEffect(() => {
+    if (isLoggedIn) navigate('/moodLog', { replace: true });
+  }, [isLoggedIn]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setErrMsg('');
     const { id, value } = event.target;
+
     if (id === 'username') setUsername(value);
     else if (id === 'password') setPassword(value);
   };
 
+  const validation = () => {
+    if (!username || !password) return 'Please check your ID and password';
+  };
+
   const handleLogin = () => {
-    // TODO: 유효성 검사 결과를 사용자에게 띄운다.
-    const isSuccess = login(username, password); // Boolean 반환
-    if (isSuccess) {
-      console.log('로그인 성공! 다음 동작 실행');
-      navigate('/moodLog', { replace: true });
-      // 예: 페이지 이동, 모달 닫기 등
-    } else {
-      console.log('아이디/비밀번호를 확인해주세요.');
-      // 예: 에러 메시지 표시
+    const hasErr = validation();
+    if (hasErr) {
+      setErrMsg(hasErr);
+      return;
     }
+    login({ username, password });
   };
 
   return (
     <Form onSubmit={handleLogin}>
-      <div className="mb-2">
+      {loading && <div className="text-5xl text-red-400">로!딩!</div>}
+      <div className="mb-2 relative">
         <Input
           id="username"
           type="text"
@@ -43,7 +52,7 @@ export default function LoginForm() {
           onChange={handleOnChange}
         />
       </div>
-      <div>
+      <div className="relative">
         <Input
           id="password"
           type="password"
@@ -52,8 +61,13 @@ export default function LoginForm() {
           onChange={handleOnChange}
         />
       </div>
-      <div className="flex justify-center items-center my-5">
+      <div className="flex justify-center items-center my-5 relative">
         <Button type="submit" text="LOGIN" />
+        {error && (
+          <div className="absolute text-xs text-red-600 top-11">
+            <p>{error}</p>
+          </div>
+        )}
       </div>
       <div className="flex justify-center items-center  gap-2">
         <button type="button" className="text-gray-500 hover:text-blue-500">
