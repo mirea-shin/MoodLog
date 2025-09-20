@@ -1,15 +1,23 @@
 import { create } from 'zustand';
 
+import { authService } from '../index';
+
+import type { User } from '../index';
+import type { AxiosError } from 'axios';
+
 interface AuthState {
   user: string | null;
   token: string | null;
   isLoggedIn: boolean;
   mode: 'login' | 'signUp';
+  error: string | null;
+  loading: boolean;
 }
 
 interface AuthAction {
-  login: (username: string, password: string) => boolean;
+  login: (user: User) => void;
   changeAuthMode: (mode: AuthState['mode']) => void;
+  setErrMsg: (msg: string) => void;
 }
 
 const useAuthStore = create<AuthState & AuthAction>((set) => ({
@@ -17,23 +25,34 @@ const useAuthStore = create<AuthState & AuthAction>((set) => ({
   user: null,
   token: null,
   isLoggedIn: false,
+  error: null,
+  loading: false,
+
   mode: 'login',
 
-  // Action
-  login: (username, password) => {
-    // TODO: 유효성 검사
-    if (!username || !password) {
-      return false; // 실패 시 false 반환
+  // Action-api
+  login: async (user) => {
+    set({ error: null });
+    set({ loading: true });
+
+    try {
+      const result = await authService.login(user);
+      set({
+        isLoggedIn: true,
+        user: result.data.user_id,
+        token: result.data.token,
+      });
+    } catch (err) {
+      console.error(err);
+      set({ error: 'Invalid username or password' });
+    } finally {
+      set({ loading: false });
     }
-
-    // TODO: 로그인 API 요청
-    set({ isLoggedIn: true, user: 'testUser', token: 'fakeToken123' });
-
-    return true; // 성공 시 true 반환
   },
-  changeAuthMode: (mode) => {
-    set({ mode });
-  },
+
+  // Action
+  setErrMsg: (msg) => set({ error: msg }),
+  changeAuthMode: (mode) => set({ mode }),
 }));
 
 export default useAuthStore;
